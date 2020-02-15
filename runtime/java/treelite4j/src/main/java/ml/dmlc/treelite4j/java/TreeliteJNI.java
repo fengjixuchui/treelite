@@ -1,4 +1,4 @@
-package ml.dmlc.treelite4j;
+package ml.dmlc.treelite4j.java;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -69,6 +69,15 @@ class TreeliteJNI {
 
   public final static native int TreelitePredictorQueryNumFeature(
     long handle, long[] out);
+
+  public final static native int TreelitePredictorQueryPredTransform(
+    long handle, String[] out);
+
+  public final static native int TreelitePredictorQuerySigmoidAlpha(
+    long handle, float[] out);
+
+  public final static native int TreelitePredictorQueryGlobalBias(
+    long handle, float[] out);
 
   public final static native int TreelitePredictorFree(long handle);
 
