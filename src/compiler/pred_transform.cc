@@ -1,14 +1,13 @@
 /*!
-* Copyright 2017 by Contributors
-* \file pred_transform.cc
-* \brief Library of transform functions to convert margins into predictions
-* \author Philip Cho
-*/
+ * Copyright (c) 2017-2020 by Contributors
+ * \file pred_transform.cc
+ * \brief Library of transform functions to convert margins into predictions
+ * \author Hyunsu Cho
+ */
 
+#include "pred_transform.h"
 #include <string>
 #include <unordered_map>
-#include <treelite/tree.h>
-#include "pred_transform.h"
 
 #include "./native/pred_transform.h"
 

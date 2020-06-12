@@ -1,8 +1,8 @@
 /*!
- * Copyright (c) 2017 by Contributors
+ * Copyright (c) 2017-2020 by Contributors
  * \file c_api_runtime.h
- * \author Philip Cho
- * \brief C API of treelite, used for interfacing with other languages
+ * \author Hyunsu Cho
+ * \brief C API of Treelite, used for interfacing with other languages
  *        This header is used exclusively by the runtime
  */
 
@@ -193,7 +193,7 @@ TREELITE_DLL int TreelitePredictorQueryNumFeature(PredictorHandle handle,
  * \return 0 for success, -1 for failure
  */
 TREELITE_DLL int TreelitePredictorQueryPredTransform(PredictorHandle handle,
-                                                     char** out);
+                                                     const char** out);
 /*!
  * \brief Get alpha value of sigmoid transformation used to train
  *        the loaded model

@@ -1,14 +1,14 @@
 /*!
- * Copyright (c) 2017 by Contributors
+ * Copyright (c) 2017-2020 by Contributors
  * \file data.h
- * \author Philip Cho
- * \brief Input data structure of treelite
+ * \author Hyunsu Cho
+ * \brief Input data structure of Treelite
  */
 #ifndef TREELITE_DATA_H_
 #define TREELITE_DATA_H_
 
-#include <vector>
 #include <dmlc/data.h>
+#include <vector>
 
 namespace treelite {
 

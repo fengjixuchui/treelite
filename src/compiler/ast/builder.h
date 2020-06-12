@@ -1,19 +1,19 @@
 /*!
- * Copyright 2017 by Contributors
+ * Copyright (c) 2017-2020 by Contributors
  * \file builder.h
  * \brief AST Builder class
  */
 #ifndef TREELITE_COMPILER_AST_BUILDER_H_
 #define TREELITE_COMPILER_AST_BUILDER_H_
 
+#include <treelite/tree.h>
+#include <dmlc/registry.h>
 #include <map>
 #include <string>
 #include <vector>
 #include <ostream>
 #include <utility>
 #include <memory>
-#include <treelite/tree.h>
-#include <dmlc/registry.h>
 #include "./ast.h"
 
 namespace treelite {

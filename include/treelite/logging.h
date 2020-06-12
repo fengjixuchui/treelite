@@ -1,14 +1,14 @@
 /*!
- * Copyright 2017 by Contributors
+ * Copyright (c) 2017-2020 by Contributors
  * \file logging.h
- * \brief logging facility for treelite
- * \author Philip Cho
+ * \brief logging facility for Treelite
+ * \author Hyunsu Cho
  */
 #ifndef TREELITE_LOGGING_H_
 #define TREELITE_LOGGING_H_
 
-#include <iostream>
 #include <dmlc/thread_local.h>
+#include <iostream>
 
 namespace treelite {
 

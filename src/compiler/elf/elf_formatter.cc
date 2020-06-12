@@ -1,16 +1,16 @@
 /*!
- * Copyright (c) 2019 by Contributors
+ * Copyright (c) 2019-2020 by Contributors
  * \file elf_formatter.cc
- * \author Philip Cho
+ * \author Hyunsu Cho
  * \brief Generate a relocatable object file containing a constant, read-only array
  */
+#include <dmlc/registry.h>
 #include <fstream>
 #include <iterator>
 #include <stdexcept>
 #include <vector>
 #include <cstdio>
 #include <cstring>
-#include <dmlc/registry.h>
 #include "./elf_formatter.h"
 
 #ifdef __linux__

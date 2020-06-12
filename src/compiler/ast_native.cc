@@ -1,18 +1,18 @@
 /*!
- * Copyright (c) 2017 by Contributors
+ * Copyright (c) 2017-2020 by Contributors
  * \file ast_native.cc
- * \author Philip Cho
+ * \author Hyunsu Cho
  * \brief C code generator
  */
+#include <treelite/compiler.h>
+#include <treelite/compiler_param.h>
+#include <treelite/annotator.h>
+#include <fmt/format.h>
 #include <algorithm>
 #include <fstream>
 #include <unordered_map>
 #include <queue>
 #include <cmath>
-#include <treelite/compiler.h>
-#include <treelite/compiler_param.h>
-#include <treelite/annotator.h>
-#include <fmt/format.h>
 #include "./pred_transform.h"
 #include "./ast/builder.h"
 #include "./native/main_template.h"

@@ -1,7 +1,7 @@
 Specifying models using model builder
 =====================================
 
-Since the scope of treelite is limited to **prediction** only, one must use
+Since the scope of Treelite is limited to **prediction** only, one must use
 other machine learning packages to **train** decision tree ensemble models. In
 this document, we will show how to import an ensemble model that had been
 trained elsewhere.
@@ -289,7 +289,7 @@ a :py:class:`~treelite.Model` object:
 .. note:: Difference between :py:class:`~treelite.ModelBuilder` and
   :py:class:`~treelite.Model` objects
 
-  Why does treelite require one last step of "committing"? All
+  Why does Treelite require one last step of "committing"? All
   :py:class:`~treelite.Model` objects are **immutable**; once constructed,
   they cannot be modified at all. So you won't be able to add a tree or a node
   to an existing :py:class:`~treelite.Model` object, for instance. On the other
@@ -362,16 +362,16 @@ by scikit-learn. In particular, it will be able to work with
   of package exposes equivalent information, you'll be able to adapt the example
   to your needs.
 
-.. note:: In a hurry? Try the gallery module
+.. note:: In a hurry? Try the sklearn module
 
   The rest of this document explains in detail how to import scikit-learn
   models using the builder class. If you prefer to skip all the gory details,
-  simply import the module :py:mod:`treelite.gallery.sklearn`.
+  simply import the module :py:mod:`treelite.sklearn`.
 
   .. code-block:: python
 
-    import treelite.gallery.sklearn
-    model = treelite.gallery.sklearn.import_model(clf)
+    import treelite.sklearn
+    model = treelite.sklearn.import_model(clf)
 
 .. note:: Adaboost ensembles not yet supported
 
@@ -414,14 +414,15 @@ to scikit-learn. Many details have been adopted from `this reference page <http:
 **The function process_model()** takes in a scikit-learn ensemble object and
 returns the completed :py:class:`~treelite.Model` object:
 
-.. literalinclude:: ../../python/treelite/gallery/sklearn/rf_regressor.py
-  :pyobject: process_model
+.. literalinclude:: ../../python/treelite/sklearn/rf_regressor.py
+  :pyobject: SKLRFRegressorMixin.process_model
 
 The usage of this function is as follows:
 
 .. code-block:: python
 
-  model = process_model(clf)
+  from treelite.sklearn import SKLRFRegressorConverter
+  model = SKLRFRegressorConverter.process_model(clf)
 
 We won't have space here to discuss all internals of scikit-learn objects, but
 a few details should be noted:
@@ -437,8 +438,8 @@ a few details should be noted:
 **The function process_tree()** takes in a single scikit-learn tree object
 and returns an object of type :py:class:`~treelite.ModelBuilder.Tree`:
 
-.. literalinclude:: ../../python/treelite/gallery/sklearn/common.py
-  :pyobject: process_tree
+.. literalinclude:: ../../python/treelite/sklearn/common.py
+  :pyobject: SKLConverterBase.process_tree
 
 Explanations:
 
@@ -450,15 +451,15 @@ or a test node. It does so by looking at the attribute ``children_left``:
 If the left child of the node is set to -1, that node is thought to be
 a leaf node.
 
-.. literalinclude:: ../../python/treelite/gallery/sklearn/common.py
-  :pyobject: process_node
+.. literalinclude:: ../../python/treelite/sklearn/common.py
+  :pyobject: SKLConverterBase.process_node
 
 **The function process_test_node()** extracts the content of a test node
 and passes it to the :py:class:`~treelite.ModelBuilder.Tree` object that is
 being constructed.
 
-.. literalinclude:: ../../python/treelite/gallery/sklearn/common.py
-  :pyobject: process_test_node
+.. literalinclude:: ../../python/treelite/sklearn/common.py
+  :pyobject: SKLConverterBase.process_test_node
 
 Explanations:
 
@@ -472,23 +473,24 @@ Explanations:
 
 .. note:: Scikit-learn and missing data
 
-  Scikit-learn handles missing data differently than XGBoost and treelite.
+  Scikit-learn handles missing data differently than XGBoost and Treelite.
   Before training an ensemble model, you'll have to `impute
   <http://scikit-learn.org/stable/modules/preprocessing.html#imputation>`_
   missing values. For this reason, test nodes in scikit-learn tree models will
   contain no "default direction." We will assign ``default_left=True``
-  arbitrarily for test nodes to keep treelite happy.
+  arbitrarily for test nodes to keep Treelite happy.
 
 **The function process_leaf_node()** defines a leaf node:
 
-.. literalinclude:: ../../python/treelite/gallery/sklearn/rf_regressor.py
-  :pyobject: process_leaf_node
+.. literalinclude:: ../../python/treelite/sklearn/rf_regressor.py
+  :pyobject: SKLRFRegressorMixin.process_leaf_node
 
 Let's test it out:
 
 .. code-block:: python
 
-  model = process_model(clf)
+  from treelite.sklearn import SKLRFRegressorConverter
+  model = SKLRFRegressorConverter.process_model(clf)
   model.export_lib(libpath='./libtest.dylib', toolchain='gcc', verbose=True)
 
   import treelite_runtime
@@ -507,12 +509,12 @@ gradient boosted trees by the value of ``random_forest`` flag in the
 
 .. note:: Set ``init='zero'`` to ensure compatibility
 
-  To make sure that the gradient boosted model is compatible with treelite,
+  To make sure that the gradient boosted model is compatible with Treelite,
   make sure to set ``init='zero'`` in the
   :py:class:`~sklearn.ensemble.GradientBoostingRegressor` constructor. This
   ensures that the compiled prediction subroutine will produce the correct
   prediction output. **Gradient boosting models trained without specifying**
-  ``init='zero'`` **in the constructor are NOT supported by treelite!**
+  ``init='zero'`` **in the constructor are NOT supported by Treelite!**
 
 .. code-block:: python
 
@@ -525,7 +527,11 @@ gradient boosted trees by the value of ``random_forest`` flag in the
 We will recycle most of the helper code we wrote earlier. Only two functions
 will need to be modified:
 
-.. literalinclude:: ../../python/treelite/gallery/sklearn/gbm_regressor.py
+.. literalinclude:: ../../python/treelite/sklearn/gbm_regressor.py
+  :pyobject: SKLGBMRegressorMixin.process_model
+
+.. literalinclude:: ../../python/treelite/sklearn/gbm_regressor.py
+  :pyobject: SKLGBMRegressorMixin.process_leaf_node
 
 Some details specific to :py:class:`~sklearn.ensemble.GradientBoostingRegressor`:
 
@@ -542,8 +548,9 @@ Let's test it:
 
 .. code-block:: python
 
-  # Convert to treelite model
-  model = process_model(clf)
+  from treelite.sklearn import SKLGBMRegressorConverter
+  # Convert to Treelite model
+  model = SKLGBMRegressorConverter.process_model(clf)
   # Generate shared library
   model.export_lib(libpath='./libtest2.dylib', toolchain='gcc', verbose=True)
   # Make prediction with predictor
@@ -632,7 +639,11 @@ which indicates the following:
 Again, most of the helper functions may be re-used; only two functions need to
 be rewritten. Explanation will follow after the code:
 
-.. literalinclude:: ../../python/treelite/gallery/sklearn/rf_classifier.py
+.. literalinclude:: ../../python/treelite/sklearn/rf_classifier.py
+  :pyobject: SKLRFClassifierMixin.process_model
+
+.. literalinclude:: ../../python/treelite/sklearn/rf_classifier.py
+  :pyobject: SKLRFClassifierMixin.process_leaf_node
 
 As noted earlier, we access the frequency counts at each leaf node, reading the
 ``value`` attribute of each tree. Then we compute the fraction of positive
@@ -641,7 +652,7 @@ This fraction then becomes the leaf output. This way, leaf nodes now produce
 single numbers rather than frequency count arrays.
 
 Why did we have to compute a fraction? **For binary classification,
-treelite expects each tree to produce a single number output.** At prediction
+Treelite expects each tree to produce a single number output.** At prediction
 time, the outputs from the member trees will get **averaged** to produce the
 final prediction, which is also a single number. By setting the positive
 fraction as the leaf output, we ensure that the final prediction is a proper
@@ -693,7 +704,11 @@ respectively.
 We will have to re-write the **process_leaf_node()** function to accomodate
 multiple classes.
 
-.. literalinclude:: ../../python/treelite/gallery/sklearn/rf_multi_classifier.py
+.. literalinclude:: ../../python/treelite/sklearn/rf_multi_classifier.py
+  :pyobject: SKLRFMultiClassifierMixin.process_model
+
+.. literalinclude:: ../../python/treelite/sklearn/rf_multi_classifier.py
+  :pyobject: SKLRFMultiClassifierMixin.process_leaf_node
 
 The ``process_leaf_node()`` function is quite similar to what we had for the
 binary classification case. Only difference is that, instead of computing the
@@ -748,17 +763,21 @@ and 1's as the positive.
 
 .. note:: Set ``init='zero'`` to ensure compatibility
 
-  To make sure that the gradient boosted model is compatible with treelite,
+  To make sure that the gradient boosted model is compatible with Treelite,
   make sure to set ``init='zero'`` in the
   :py:class:`~sklearn.ensemble.GradientBoostingClassifier` constructor. This
   ensures that the compiled prediction subroutine will produce the correct
   prediction output. **Gradient boosting models trained without specifying**
-  ``init='zero'`` **in the constructor are NOT supported by treelite!**
+  ``init='zero'`` **in the constructor are NOT supported by Treelite!**
 
 Here are the functions ``process_model()`` and ``process_leaf_node()`` for this
 scenario:
 
-.. literalinclude:: ../../python/treelite/gallery/sklearn/gbm_classifier.py
+.. literalinclude:: ../../python/treelite/sklearn/gbm_classifier.py
+  :pyobject: SKLGBMClassifierMixin.process_model
+
+.. literalinclude:: ../../python/treelite/sklearn/gbm_classifier.py
+  :pyobject: SKLGBMClassifierMixin.process_leaf_node
 
 Some details specific to :py:class:`~sklearn.ensemble.GradientBoostingClassifier`:
 
@@ -835,17 +854,21 @@ again, this time with 4 classes (i.e. 0's, 1's, 2's, and 3's).
 
 .. note:: Set ``init='zero'`` to ensure compatibility
 
-  To make sure that the gradient boosted model is compatible with treelite,
+  To make sure that the gradient boosted model is compatible with Treelite,
   make sure to set ``init='zero'`` in the
   :py:class:`~sklearn.ensemble.GradientBoostingClassifier` constructor. This
   ensures that the compiled prediction subroutine will produce the correct
   prediction output. **Gradient boosting models trained without specifying**
-  ``init='zero'`` **in the constructor are NOT supported by treelite!**
+  ``init='zero'`` **in the constructor are NOT supported by Treelite!**
 
 Here are the functions ``process_model()`` and ``process_leaf_node()`` for this
 scenario:
 
-.. literalinclude:: ../../python/treelite/gallery/sklearn/gbm_multi_classifier.py
+.. literalinclude:: ../../python/treelite/sklearn/gbm_multi_classifier.py
+  :pyobject: SKLGBMMultiClassifierMixin.process_model
+
+.. literalinclude:: ../../python/treelite/sklearn/gbm_multi_classifier.py
+  :pyobject: SKLGBMMultiClassifierMixin.process_leaf_node
 
 The ``process_leaf_node()`` function is identical to one in the previous
 section: as before, each leaf node produces a single real-number output.

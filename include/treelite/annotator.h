@@ -1,15 +1,15 @@
 /*!
- * Copyright (c) 2017 by Contributors
+ * Copyright (c) 2017-2020 by Contributors
  * \file annotator.h
- * \author Philip Cho
+ * \author Hyunsu Cho
  * \brief Branch annotation tools
  */
 #ifndef TREELITE_ANNOTATOR_H_
 #define TREELITE_ANNOTATOR_H_
 
-#include <vector>
 #include <treelite/tree.h>
 #include <treelite/data.h>
+#include <vector>
 
 namespace treelite {
 

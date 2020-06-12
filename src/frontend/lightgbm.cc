@@ -1,16 +1,16 @@
 /*!
- * Copyright 2017-2020 by Contributors
+ * Copyright (c) 2017-2020 by Contributors
  * \file lightgbm.cc
  * \brief Frontend for LightGBM model
  * \author Hyunsu Cho
  */
 
-#include <unordered_map>
-#include <limits>
-#include <queue>
 #include <dmlc/data.h>
 #include <treelite/frontend.h>
 #include <treelite/tree.h>
+#include <unordered_map>
+#include <limits>
+#include <queue>
 
 namespace {
 

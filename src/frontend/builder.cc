@@ -1,15 +1,15 @@
 /*!
- * Copyright 2017 by Contributors
+ * Copyright (c) 2017-2020 by Contributors
  * \file builder.cc
  * \brief model builder frontend
- * \author Philip Cho
+ * \author Hyunsu Cho
  */
 
-#include <memory>
-#include <queue>
 #include <dmlc/registry.h>
 #include <treelite/frontend.h>
 #include <treelite/tree.h>
+#include <memory>
+#include <queue>
 #include "../c_api/c_api_error.h"
 
 #define CHECK_EARLY_RETURN(x, msg)                           \

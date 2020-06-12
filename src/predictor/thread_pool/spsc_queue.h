@@ -1,11 +1,11 @@
 /*!
-* Copyright by 2018 Contributors
+* Copyright (c) 2018-2020 by Contributors
 * \file spsc_queue.h
 * \brief Lock-free single-producer-single-consumer queue
-* \author Yida Wang, Philip Cho
+* \author Yida Wang, Hyunsu Cho
 */
-#ifndef TREELITE_THREAD_POOL_SPSC_QUEUE_H_
-#define TREELITE_THREAD_POOL_SPSC_QUEUE_H_
+#ifndef TREELITE_PREDICTOR_THREAD_POOL_SPSC_QUEUE_H_
+#define TREELITE_PREDICTOR_THREAD_POOL_SPSC_QUEUE_H_
 
 #include <dmlc/logging.h>
 #include <atomic>
@@ -117,4 +117,4 @@ class SpscQueue {
   std::condition_variable cv_;
 };
 
-#endif  // TREELITE_THREAD_POOL_SPSC_QUEUE_H_
+#endif  // TREELITE_PREDICTOR_THREAD_POOL_SPSC_QUEUE_H_

@@ -1,19 +1,19 @@
 /*!
- * Copyright 2017 by Contributors
+ * Copyright (c) 2017-2020 by Contributors
  * \file compiler.h
  * \brief Interface of compiler that compiles a tree ensemble model
- * \author Philip Cho
+ * \author Hyunsu Cho
  */
 #ifndef TREELITE_COMPILER_H_
 #define TREELITE_COMPILER_H_
 
+#include <dmlc/registry.h>
 #include <unordered_map>
 #include <functional>
 #include <memory>
 #include <string>
 #include <vector>
 #include <utility>
-#include <dmlc/registry.h>
 
 namespace treelite {
 

@@ -1,18 +1,18 @@
 /*!
- * Copyright 2017 by Contributors
+ * Copyright (c) 2017-2020 by Contributors
  * \file xgboost.cc
  * \brief Frontend for xgboost model
- * \author Philip Cho
+ * \author Hyunsu Cho
  */
 
-#include <algorithm>
-#include <memory>
-#include <queue>
-#include <cstring>
 #include <dmlc/data.h>
 #include <dmlc/memory_io.h>
 #include <treelite/frontend.h>
 #include <treelite/tree.h>
+#include <algorithm>
+#include <memory>
+#include <queue>
+#include <cstring>
 
 namespace {
 
